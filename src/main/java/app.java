@@ -1,39 +1,28 @@
-public void listenSocket(){
-        try{
-        server = new ServerSocket(4321);
-        } catch (IOException e) {
-        System.out.println("Could not listen on port 4321");
-        System.exit(-1);
-        }
+import java.util.HashMap;
+import java.util.Map;
+import spark.ModelAndView;
+import spark.template.velocity.VelocityTemplateEngine;
+import static spark.Spark.*;
 
-        listenSocketSocketserver.acceptSocket
-        try{
-        client = server.accept();
-        } catch (IOException e) {
-        System.out.println("Accept failed: 4321");
-        System.exit(-1);
-        }
+public class app {
 
-        listenSocketBufferedReaderclientPrintWriter
-        try{
-        in = new BufferedReader(new InputStreamReader(
-        client.getInputStream()));
-        out = new PrintWriter(client.getOutputStream(),
-        true);
-        } catch (IOException e) {
-        System.out.println("Read failed");
-        System.exit(-1);
-        }
-        }
+  public static void main(String[] args) {
 
-        listenSocket
-        while(true){
-        try{
-        line = in.readLine();
-//Send data back to client
-        out.println(line);
-        } catch (IOException e) {
-        System.out.println("Read failed");
-        System.exit(-1);
-        }
-        }
+    staticFileLocation("/public");
+    String layout = "templates/layout.vtl";
+
+    get("/", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/index.vtl" );
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/favorite_photos", (request, response) -> {
+      Map<String, Object> model = new HashMap<String, Object>();
+      model.put("template", "templates/page1.vtl" );
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+  }
+
+}
